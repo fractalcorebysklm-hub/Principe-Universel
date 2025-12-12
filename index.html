@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FractalCore - Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+            color: #f0f0f0;
+        }
+
+        .essence {
+            font-size: 1.1em;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            font-style: italic;
+            border-left: 4px solid #fbbf24;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .universal-def {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.2) 0%, rgba(245, 158, 11, 0.2) 100%);
+            border: 2px solid #fbbf24;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(251, 191, 36, 0.2);
+        }
+
+        .universal-def h3 {
+            color: #fbbf24;
+            font-size: 1.6em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .universal-def p {
+            font-size: 1.15em;
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #a78bfa;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .variable-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .variable-name {
+            font-size: 1.4em;
+            color: #fbbf24;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .variable-desc {
+            color: #d1d5db;
+            margin-bottom: 10px;
+        }
+
+        .formula {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            color: #fbbf24;
+            margin: 15px 0;
+            border-left: 3px solid #fbbf24;
+            overflow-x: auto;
+        }
+
+        .canvas-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        canvas {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+
+        .step-card {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(245, 158, 11, 0.1) 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #fbbf24;
+        }
+
+        .step-number {
+            display: inline-block;
+            background: #fbbf24;
+            color: #0a0e27;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+
+        .highlight {
+            color: #fbbf24;
+            font-weight: bold;
+        }
+
+        .warning {
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .info {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .scope-box {
+            background: linear-gradient(135deg, rgba(167, 139, 250, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%);
+            border: 2px solid #a78bfa;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(167, 139, 250, 0.2);
+        }
+
+        .scope-box h3 {
+            color: #a78bfa;
+            text-align: center;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .scope-box p {
+            font-size: 1.1em;
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        .domains-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .domain-tag {
+            background: rgba(102, 126, 234, 0.2);
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid rgba(102, 126, 234, 0.4);
+            transition: all 0.3s;
+        }
+
+        .domain-tag:hover {
+            background: rgba(102, 126, 234, 0.3);
+            transform: translateY(-2px);
+        }
+
+        ul, ol {
+            margin-left: 25px;
+            margin-top: 10px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .principle-box {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(5, 150, 105, 0.2) 100%);
+            border: 2px solid #10b981;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.2);
+        }
+
+        .principle-box h3 {
+            color: #10b981;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+            .domains-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚡ FractalCore</h1>
+            <p class="subtitle">Principe Universel de Lecture des Systèmes Complexes</p>
+            <div class="essence">
+                FractalCore décrit comment un système absorbe, amplifie ou dissipe une perturbation lorsqu'il est proche de sa limite de cohérence.
+            </div>
+            <p style="margin-top: 15px; font-size: 0.9em;">Développé par sklm trading</p>
+        </header>
+
+        <!-- DÉFINITION UNIVERSELLE -->
+        <div class="universal-def">
+            <h3>📐 Définition Universelle de λ-FC</h3>
+            <p>
+                <strong>λ-FC</strong> est le <span class="highlight">facteur d'élasticité fractale</span> d'un système dynamique, mesurant la capacité moyenne d'une perturbation normalisée à se propager ou à se résorber lorsqu'un système évolue à proximité de son point critique.
+            </p>
+        </div>
+
+        <!-- PRINCIPE D'INVARIANCE -->
+        <div class="principle-box">
+            <h3>🔬 Principe d'Invariance FractalCore</h3>
+            <p>Les systèmes complexes auto-organisés partagent une propriété commune : lorsqu'ils opèrent à la <strong>frontière entre ordre et chaos</strong>, leur réponse aux perturbations obéit à des lois d'échelle invariantes.</p>
+            
+            <p style="margin-top: 15px;"><strong>λ-FC capture cette loi d'échelle indépendamment :</strong></p>
+            <ul style="text-align: left; max-width: 600px; margin: 15px auto;">
+                <li>de la nature du système</li>
+                <li>de l'unité de mesure</li>
+                <li>du support physique ou informationnel</li>
+            </ul>
+
+            <div class="info" style="margin-top: 20px;">
+                <strong>Ce n'est pas un indicateur.</strong> Ce n'est pas un artefact du marché. C'est une propriété structurelle du réel.
+            </div>
+        </div>
+
+        <!-- DOMAINES D'APPLICATION -->
+        <div class="section">
+            <h2>🌐 Domaines d'Application Universels</h2>
+            <p>Le principe λ-FC s'applique à tout système dynamique proche de la criticalité :</p>
+            
+            <div class="domains-grid">
+                <div class="domain-tag">📊 Marchés Financiers</div>
+                <div class="domain-tag">🌪️ Turbulence</div>
+                <div class="domain-tag">🧠 Réseaux Neuronaux</div>
+                <div class="domain-tag">🧬 Biologie</div>
+                <div class="domain-tag">🌍 Climat</div>
+                <div class="domain-tag">👥 Sociologie</div>
+                <div class="domain-tag">💻 Systèmes Informatiques</div>
+                <div class="domain-tag">🎯 Cognition</div>
+            </div>
+
+            <div class="info" style="margin-top: 25px;">
+                <strong>Valeur mesurée :</strong> λ-FC ≈ 1.200 ± 0.005
+                <p style="margin-top: 10px;">Cette constante apparaît de manière récurrente dans l'analyse des systèmes proches de leur point critique, suggérant une loi universelle sous-jacente.</p>
+            </div>
+        </div>
+
+        <!-- APPLICATION PRATIQUE : MARCHÉS FINANCIERS -->
+        <div class="section">
+            <h2>💹 Application Pratique : Marchés Financiers</h2>
+            <p>Dans le contexte des marchés, le modèle FractalCore permet de mesurer l'état de cohérence du système et sa proximité à une transition critique.</p>
+
+            <h3>Variables du Modèle (contexte marchés)</h3>
+
+            <div class="variable-card">
+                <div class="variable-name">λ-FC (Lambda FractalCore)</div>
+                <div class="variable-desc">Facteur d'élasticité fractale du système</div>
+                <div class="formula">λ-FC ≈ 1.200</div>
+                <p><strong>Mesure :</strong> La capacité du marché à propager ou absorber une perturbation de prix.</p>
+            </div>
+
+            <div class="variable-card">
+                <div class="variable-name">τ-FC (Tau FractalCore)</div>
+                <div class="variable-desc">Temps caractéristique de propagation</div>
+                <div class="formula">τ-FC = durée typique d'une cascade</div>
+                <p><strong>Mesure :</strong> Échelle temporelle sur laquelle une perturbation se propage dans le système.</p>
+            </div>
+
+            <div class="variable-card">
+                <div class="variable-name">Aᵢ (Attracteurs)</div>
+                <div class="variable-desc">Points d'équilibre dynamique</div>
+                <div class="formula">A₁, A₂, A₃... = zones de convergence</div>
+                <p><strong>Mesure :</strong> Niveaux vers lesquels le système tend à revenir après perturbation.</p>
+            </div>
+
+            <div class="variable-card">
+                <div class="variable-name">κᵢ (Kappa - Constantes d'échelle)</div>
+                <div class="variable-desc">Ratios fractals entre échelles</div>
+                <div class="formula">κ₁ = 1.0, κ₂ = 1.618 (φ), κ₃ = 2.618 (φ²)</div>
+                <p><strong>Mesure :</strong> Facteurs de scaling décrivant l'auto-similarité du système.</p>
+            </div>
+
+            <div class="variable-card">
+                <div class="variable-name">γ-FC (Gamma FractalCore)</div>
+                <div class="variable-desc">Coefficient de déformation</div>
+                <div class="formula">γ-FC = distance normalisée à l'équilibre</div>
+                <p><strong>Mesure :</strong> Degré de tension du système par rapport à son état d'équilibre.</p>
+            </div>
+
+            <div class="variable-card">
+                <div class="variable-name">E-FC (Énergie Fractale)</div>
+                <div class="variable-desc">Potentiel de propagation</div>
+                <div class="formula">E-FC = capacité du système à cascader</div>
+                <p><strong>Mesure :</strong> Énergie disponible pour une avalanche (dans les marchés : volume × volatilité).</p>
+            </div>
+        </div>
+
+        <!-- MÉTRIQUE DS² -->
+        <div class="section">
+            <h2>📐 Métrique Fractale ds²</h2>
+            <p>La distance dans l'espace fractal combine toutes les dimensions du système :</p>
+            
+            <div class="formula">
+                ds² = λ² + τ² + κ² + v²ₙₒᵣₘ + Ψ² + X²
+            </div>
+
+            <p style="margin-top: 15px;">Cette métrique mesure la "distance critique" entre l'état actuel et une transition de phase.</p>
+        </div>
+
+        <!-- VISUALISATION -->
+        <div class="section">
+            <h2>📊 Visualisation du Modèle</h2>
+            
+            <h3>Diagramme des Attracteurs</h3>
+            <div class="canvas-container">
+                <canvas id="attractorCanvas" width="800" height="500"></canvas>
+            </div>
+
+            <h3>Structure Fractale et Niveaux κᵢ</h3>
+            <div class="canvas-container">
+                <canvas id="fractalCanvas" width="800" height="400"></canvas>
+            </div>
+        </div>
+
+        <!-- GUIDE PRATIQUE -->
+        <div class="section">
+            <h2>🎯 Guide d'Utilisation (Trading)</h2>
+
+            <div class="step-card">
+                <span class="step-number">1</span>
+                <strong>Identifier les Attracteurs (Aᵢ)</strong>
+                <p style="margin-top: 10px;">Repérer les zones d'équilibre dynamique du système (supports, résistances, POC).</p>
+            </div>
+
+            <div class="step-card">
+                <span class="step-number">2</span>
+                <strong>Calculer les Niveaux κᵢ</strong>
+                <p style="margin-top: 10px;">Projeter les zones fractales à partir d'un attracteur principal.</p>
+                <div class="formula">A₂ = A₁ × κ₂ = A₁ × 1.618</div>
+            </div>
+
+            <div class="step-card">
+                <span class="step-number">3</span>
+                <strong>Mesurer γ-FC (Déformation)</strong>
+                <p style="margin-top: 10px;">Évaluer la tension du système.</p>
+                <div class="formula">γ-FC = |État actuel - Attracteur proche| / σ</div>
+                <ul>
+                    <li>γ < 0.5 : système à l'équilibre</li>
+                    <li>0.5 < γ < 2.0 : zone normale</li>
+                    <li>γ > 2.0 : forte tension, transition probable</li>
+                </ul>
+            </div>
+
+            <div class="step-card">
+                <span class="step-number">4</span>
+                <strong>Évaluer E-FC (Énergie Fractale)</strong>
+                <p style="margin-top: 10px;">Mesurer le potentiel de cascade.</p>
+                <div class="formula">E-FC ≈ (Activité relative) × (Volatilité) × (1 + γ-FC)</div>
+            </div>
+
+            <div class="step-card">
+                <span class="step-number">5</span>
+                <strong>Définir τ-FC (Échelle Temporelle)</strong>
+                <p style="margin-top: 10px;">Identifier la durée caractéristique de propagation selon l'échelle d'observation.</p>
+            </div>
+
+            <div class="step-card">
+                <span class="step-number">6</span>
+                <strong>Confirmer avec λ-FC</strong>
+                <p style="margin-top: 10px;">Vérifier que le système approche son point critique (λ ≈ 1.20).</p>
+            </div>
+        </div>
+
+        <!-- PORTÉE DU MODÈLE -->
+        <div class="scope-box">
+            <h3>🎯 Portée du Modèle</h3>
+            <p>
+                <strong>FractalCore ne prédit pas les événements.</strong>
+            </p>
+            <p style="margin-top: 15px;">
+                Il décrit l'état de cohérence d'un système et sa distance à une transition critique.
+            </p>
+        </div>
+
+        <!-- EXEMPLES DE SETUPS -->
+        <div class="section">
+            <h2>💡 Exemples de Setups (Trading)</h2>
+
+            <h3>Setup 1 : Retour à l'Attracteur</h3>
+            <div class="info">
+                <strong>Conditions :</strong>
+                <ul>
+                    <li>γ-FC > 2.0 (forte déformation)</li>
+                    <li>E-FC élevé</li>
+                    <li>Système loin d'un attracteur</li>
+                </ul>
+                <strong>Interprétation :</strong> Le système est sous tension et tend à revenir vers l'équilibre.
+            </div>
+
+            <h3>Setup 2 : Transition Critique</h3>
+            <div class="info">
+                <strong>Conditions :</strong>
+                <ul>
+                    <li>État atteint un niveau κᵢ</li>
+                    <li>E-FC très élevé</li>
+                    <li>λ-FC proche de 1.20</li>
+                </ul>
+                <strong>Interprétation :</strong> Le système approche d'un point critique, une cascade est probable.
+            </div>
+
+            <h3>Setup 3 : Accumulation d'Énergie</h3>
+            <div class="info">
+                <strong>Conditions :</strong>
+                <ul>
+                    <li>γ-FC < 0.5 (près d'un attracteur)</li>
+                    <li>E-FC en accumulation</li>
+                    <li>τ-FC approche de sa durée critique</li>
+                </ul>
+                <strong>Interprétation :</strong> Énergie en accumulation, transition imminente.
+            </div>
+        </div>
+
+        <!-- AVERTISSEMENTS -->
+        <div class="section">
+            <h2>⚠️ Avertissements</h2>
+
+            <div class="warning">
+                <strong>Nature expérimentale :</strong>
+                <ul>
+                    <li>Ce modèle est en développement constant</li>
+                    <li>Application aux marchés : aucune garantie de performance</li>
+                    <li>Toujours utiliser un money management strict (1-2% par position)</li>
+                    <li>Ne constitue pas un conseil financier</li>
+                </ul>
+            </div>
+
+            <div class="info">
+                <strong>Validation en cours :</strong>
+                <p>Le modèle FractalCore est testé en conditions réelles sur les marchés financiers. Les résultats et ajustements sont partagés sur Discord et TradingView.</p>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="section" style="text-align: center; background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);">
+            <h2>🔗 Ressources</h2>
+            <p style="margin: 20px 0;">
+                <strong>TradingView:</strong> sklm trading<br>
+                <strong>Discord:</strong> <a href="https://discord.gg/qXWfxxcrT7" target="_blank" style="color: #667eea; text-decoration: none; font-weight: bold;">discord.gg/qXWfxxcrT7</a><br>
+                <strong>YouTube:</strong> @Fractalcore-SKLM Trading
+            </p>
+            <p style="margin-top: 30px; opacity: 0.7; font-size: 0.9em;">
+                © 2025 FractalCore - Développé par sklm trading
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // CANVAS 1: Attracteurs
+        const canvas1 = document.getElementById('attractorCanvas');
+        const ctx1 = canvas1.getContext('2d');
+        
+        function drawAttractors() {
+            const w = canvas1.width;
+            const h = canvas1.height;
+            
+            ctx1.fillStyle = 'rgba(10, 14, 39, 0.8)';
+            ctx1.fillRect(0, 0, w, h);
+            
+            ctx1.strokeStyle = 'rgba(102, 126, 234, 0.2)';
+            ctx1.lineWidth = 1;
+            for(let i = 0; i < w; i += 50) {
+                ctx1.beginPath();
+                ctx1.moveTo(i, 0);
+                ctx1.lineTo(i, h);
+                ctx1.stroke();
+            }
+            for(let i = 0; i < h; i += 50) {
+                ctx1.beginPath();
+                ctx1.moveTo(0, i);
+                ctx1.lineTo(w, i);
+                ctx1.stroke();
+            }
+            
+            const attractors = [
+                {x: 200, y: 250, label: 'A₁', color: '#fbbf24'},
+                {x: 400, y: 200, label: 'A₂', color: '#f59e0b'},
+                {x: 600, y: 300, label: 'A₃', color: '#fbbf24'}
+            ];
+            
+            attractors.forEach(a => {
+                const gradient = ctx1.createRadialGradient(a.x, a.y, 0, a.x, a.y, 60);
+                gradient.addColorStop(0, a.color + '40');
+                gradient.addColorStop(1, 'transparent');
+                ctx1.fillStyle = gradient;
+                ctx1.fillRect(a.x - 60, a.y - 60, 120, 120);
+                
+                ctx1.fillStyle = a.color;
+                ctx1.beginPath();
+                ctx1.arc(a.x, a.y, 8, 0, Math.PI * 2);
+                ctx1.fill();
+                
+                ctx1.font = 'bold 18px sans-serif';
+                ctx1.fillStyle = 'white';
+                ctx1.fillText(a.label, a.x + 15, a.y - 10);
+            });
+            
+            const currentState = {x: 350, y: 400};
+            ctx1.fillStyle = '#3b82f6';
+            ctx1.beginPath();
+            ctx1.arc(currentState.x, currentState.y, 6, 0, Math.PI * 2);
+            ctx1.fill();
+            
+            ctx1.strokeStyle = '#ef4444';
+            ctx1.lineWidth = 2;
+            ctx1.setLineDash([5, 5]);
+            ctx1.beginPath();
+            ctx1.moveTo(currentState.x, currentState.y);
+            ctx1.lineTo(attractors[1].x, attractors[1].y);
+            ctx1.stroke();
+            ctx1.setLineDash([]);
+            
+            ctx1.font = '14px monospace';
+            ctx1.fillStyle = '#ef4444';
+            ctx1.fillText('γ-FC = 1.8 (tension élevée)', 360, 320);
+            
+            ctx1.font = '12px sans-serif';
+            ctx1.fillStyle = 'white';
+            ctx1.fillText('🟡 Attracteurs (équilibres)', 20, 30);
+            ctx1.fillStyle = '#3b82f6';
+            ctx1.fillText('🔵 État actuel', 20, 50);
+            ctx1.fillStyle = '#ef4444';
+            ctx1.fillText('--- Distance γ-FC', 20, 70);
+        }
+        
+        // CANVAS 2: Structure Fractale
+        const canvas2 = document.getElementById('fractalCanvas');
+        const ctx2 = canvas2.getContext('2d');
+        
+        function drawFractalLevels() {
+            const w = canvas2.width;
+            const h = canvas2.height;
+            
+            ctx2.fillStyle = 'rgba(10, 14, 39, 0.8)';
+            ctx2.fillRect(0, 0, w, h);
+            
+            const baseLevel = h / 2;
+            const levels = [
+                {ratio: 1.0, label: 'κ₁ = 1.0', color: '#fbbf24'},
+                {ratio: 1.200, label: 'λ-FC = 1.20 (critique)', color: '#ef4444'},
+                {ratio: 1.366, label: 'κ₄ = 1.366', color: '#a78bfa'},
+                {ratio: 1.618, label: 'κ₂ = φ = 1.618', color: '#10b981'},
+                {ratio: 2.618, label: 'κ₃ = φ² = 2.618', color: '#3b82f6'}
+            ];
+            
+            levels.forEach((level) => {
+                const y = baseLevel - (level.ratio - 1) * 150;
+                
+                ctx2.strokeStyle = level.color;
+                ctx2.lineWidth = level.label.includes('λ-FC') ? 3 : 2;
+                ctx2.setLineDash(level.label.includes('λ-FC') ? [10, 5] : []);
+                ctx2.beginPath();
+                ctx2.moveTo(50, y);
+                ctx2.lineTo(w - 50, y);
+                ctx2.stroke();
+                
+                ctx2.font = level.label.includes('λ-FC') ? 'bold 14px monospace' : '12px monospace';
+                ctx2.fillStyle = level.color;
+                ctx2.fillText(level.label, w - 250, y - 10);
+                ctx2.setLineDash([]);
+            });
+            
+            ctx2.font = 'bold 16px sans-serif';
+            ctx2.fillStyle = 'white';
+            ctx2.fillText('Niveaux Fractals (Constantes d\'Échelle)', 50, 30);
+        }
+        
+        drawAttractors();
+        drawFractalLevels();
+        
+        window.addEventListener('resize', () => {
+            drawAttractors();
+            drawFractalLevels();
+        });
+    </script>
+</body>
+</html>
